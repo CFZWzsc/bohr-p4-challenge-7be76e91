@@ -1,0 +1,134 @@
+{
+  "policy_version": "plan-comparison-policy/2.0",
+  "description": "候选实验方案横向比较的默认权重、单位换算、可行性档位与容差。仅上述文件声明的换算才会执行，未声明的换算一律标记 unit_mismatch。",
+  "base_currency": "CNY",
+  "criteria": [
+    {
+      "id": "objective",
+      "name": "目标契合",
+      "weight": 0.25,
+      "direction": "higher",
+      "unit": "ratio 0-1",
+      "fields": ["objective_fit", "objective_met_ratio", "endpoint_coverage"]
+    },
+    {
+      "id": "risk",
+      "name": "风险",
+      "weight": 0.2,
+      "direction": "lower",
+      "unit": "risk score 0-1",
+      "fields": ["risk_score", "high_risk_count", "mitigation_coverage"]
+    },
+    {
+      "id": "cost",
+      "name": "成本与时间",
+      "weight": 0.2,
+      "direction": "lower",
+      "unit": "currency + hours",
+      "fields": ["cost_total", "time_total_h"],
+      "subweights": {"cost": 0.65, "time": 0.35}
+    },
+    {
+      "id": "feasibility",
+      "name": "可行性",
+      "weight": 0.2,
+      "direction": "higher",
+      "unit": "ordinal 0-1",
+      "fields": ["feasibility_score"]
+    },
+    {
+      "id": "evidence",
+      "name": "证据强度",
+      "weight": 0.15,
+      "direction": "higher",
+      "unit": "weighted citation count",
+      "fields": ["evidence_strength"]
+    }
+  ],
+  "feasibility_levels": {
+    "ready": 1.0,
+    "conditional_outsource": 0.6,
+    "conditional_purchase": 0.4,
+    "not_feasible": 0.0,
+    "unknown": null
+  },
+  "feasibility_labels_zh": {
+    "ready": "已具备",
+    "conditional_outsource": "可外协",
+    "conditional_purchase": "需采购",
+    "not_feasible": "不具备",
+    "unknown": "未确认"
+  },
+  "risk_levels": {
+    "low": 0.2,
+    "medium": 0.5,
+    "high": 0.8,
+    "critical": 1.0
+  },
+  "risk_numeric_scales": {
+    "0-1": 1.0,
+    "0-5": 5.0,
+    "0-10": 10.0
+  },
+  "evidence_type_weights": {
+    "literature": 1.0,
+    "equipment_manual": 0.9,
+    "sop": 0.8,
+    "pre_experiment": 0.8,
+    "quote": 0.7,
+    "log": 0.6,
+    "unknown": 0.5
+  },
+  "units": {
+    "time": {
+      "min": 0.0166666667,
+      "minute": 0.0166666667,
+      "minutes": 0.0166666667,
+      "h": 1.0,
+      "hr": 1.0,
+      "hour": 1.0,
+      "hours": 1.0,
+      "d": 24.0,
+      "day": 24.0,
+      "days": 24.0,
+      "wk": 168.0,
+      "week": 168.0,
+      "weeks": 168.0
+    },
+    "money_scale": {
+      "CNY": 1.0,
+      "RMB": 1.0,
+      "USD": 1.0,
+      "EUR": 1.0,
+      "GBP": 1.0,
+      "CNY_10K": 10000.0
+    }
+  },
+  "fx_rates_to_base": {},
+  "tolerances": {
+    "cost_absolute": 1.0,
+    "cost_relative": 0.01,
+    "time_absolute_h": 0.25,
+    "time_relative": 0.01,
+    "tie_epsilon": 0.0001
+  },
+  "constraints": {
+    "budget_is_hard": true,
+    "time_window_is_hard": true,
+    "lead_time_is_hard": true,
+    "parameter_domain_is_hard": true,
+    "require_min_evidence_items": 0
+  },
+  "scoring": {
+    "normalization": "min-max per dimension across candidates",
+    "missing_value_policy": "excluded from that dimension and weights renormalized; conservative_score sets missing normalized value to 0.0",
+    "single_candidate": "score 1.0 when only one candidate",
+    "all_equal": "score 1.0 for every candidate when the range is zero"
+  },
+  "sensitivity": {
+    "weight_factors": [0.75, 1.25],
+    "weight_sweep_step": 0.05,
+    "missing_data_stress": ["best_case", "worst_case"],
+    "resource_downgrade": true
+  }
+}
