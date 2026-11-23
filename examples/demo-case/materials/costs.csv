@@ -1,0 +1,12 @@
+candidate,item,category,quantity,unit,unit_price,currency
+A,assay_kit,consumable,2,kit,850,CNY
+A,buffer,consumable,1,bottle,450,CNY
+A,plate_reader,equipment,6,h,180,CNY
+A,technician,labor,4,person_days,600,CNY
+B,probe_kit,consumable,1,kit,2200,CNY
+B,plate,consumable,3,plate,120,CNY
+B,plate_reader,equipment,12,h,95,CNY
+B,technician,labor,3,person_days,600,CNY
+C,imaging_reagent,consumable,4,vial,300,CNY
+C,imaging_system,equipment,8,h,140,CNY
+C,technician,labor,5,person_days,600,CNY
