@@ -1,0 +1,85 @@
+{
+  "case_id": "demo-plan-comparison-001",
+  "title": "示例（合成）：三种蛋白定量路线的横向比较与选择",
+  "note": "本案例完全为合成示例，用于验证接口与算术，不代表任何真实实验室、报价或审批。",
+  "objective": "在 4 天窗口内定量 96 个细胞裂解样本中的目标蛋白，成本不超过 6000 CNY，并保留可追溯的校准证据。",
+  "objectives": [
+    "quantify target protein in 96 cell lysate samples",
+    "turnaround within 4 days",
+    "total cost below 6000 CNY"
+  ],
+  "constraints": {
+    "budget_cny": 6000,
+    "time_window_h": 96,
+    "min_evidence_items": 2
+  },
+  "budget": 6000,
+  "time_window_h": 96,
+  "currency": "CNY",
+  "weights": {
+    "objective": 0.25,
+    "risk": 0.2,
+    "cost": 0.2,
+    "feasibility": 0.2,
+    "evidence": 0.15
+  },
+  "parameter_domains": {
+    "incubation_temp_c": {"min": 4, "max": 37},
+    "read_cycles": {"min": 1, "max": 40}
+  },
+  "candidates": [
+    {
+      "id": "A",
+      "name": "方案A-酶标法",
+      "objective_fit": 0.82,
+      "risk_level": "medium",
+      "parameters": {
+        "incubation_temp_c": 37,
+        "read_cycles": 12
+      },
+      "resources": [
+        {"name": "plate_reader", "availability": "available", "lead_time_days": 0},
+        {"name": "assay_kit", "availability": "available", "lead_time_days": 0}
+      ]
+    },
+    {
+      "id": "B",
+      "name": "方案B-化学发光法",
+      "objective_fit": 0.8,
+      "risk_level": "low",
+      "parameters": {
+        "incubation_temp_c": 25,
+        "read_cycles": 20
+      },
+      "resources": [
+        {"name": "plate_reader", "availability": "available", "lead_time_days": 0},
+        {"name": "probe_kit", "availability": "needs purchase", "lead_time_days": 2}
+      ]
+    },
+    {
+      "id": "C",
+      "name": "方案C-成像定量法",
+      "objective_fit": 0.85,
+      "risk_level": "high",
+      "parameters": {
+        "incubation_temp_c": 30,
+        "read_cycles": 30
+      },
+      "resources": [
+        {"name": "plate_reader", "availability": "available", "lead_time_days": 0},
+        {"name": "imaging_system", "availability": "available", "lead_time_days": 0}
+      ]
+    }
+  ],
+  "output_contract": {
+    "candidates": "array",
+    "comparison_table": "array",
+    "recommendation": "object",
+    "costs": "array",
+    "feasibility": "array",
+    "risks": "array",
+    "evidence": "array",
+    "uncertainty": "array",
+    "summary": "object"
+  }
+}
