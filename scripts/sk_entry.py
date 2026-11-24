@@ -2496,7 +2496,9 @@ def run_pipeline(opts):
     def log(step, detail):
         run_log.append({"step": step, "detail": detail})
 
-    log("start", "input=%s out=%s work=%s" % (opts["input"], opts["out"], opts["work"]))
+    log("start", "input=%s out=%s work=%s" % (os.path.basename(os.path.normpath(opts["input"])),
+                                               os.path.basename(opts["out"]),
+                                               os.path.basename(os.path.normpath(opts["work"]))))
     log("policy", "loaded %s" % policy_source)
 
     case_path = opts["case"] if opts.get("case") else None
