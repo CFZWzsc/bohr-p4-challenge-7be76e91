@@ -39,9 +39,3 @@ contract-complete `/app/output/result.json` plus the human-readable review files
 described in `SKILL.md`. The same input always produces byte-identical output; no
 network access is used, and fields the materials cannot support are reported
 explicitly instead of being left empty.
-
-## Notes
-
-- Pure Python standard library; no network access required.
-- Every claim is anchored to paragraph-level evidence; unknown items are reported
-  in `uncertainty` instead of being fabricated.
