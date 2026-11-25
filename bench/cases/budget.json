@@ -1,0 +1,94 @@
+{
+  "case_id": "bench-budget-001",
+  "title": "合成基准案例：预算硬约束下的三方案选择",
+  "note": "本案例为合成数据，仅用于公平对照验证，不代表任何真实实验室、报价或审批。",
+  "objective": "在 5 天窗口内完成 48 个样本的目标代谢物定量，总成本不超过 5000 CNY，并保留可追溯证据。",
+  "objectives": [
+    "quantify target metabolite in 48 samples",
+    "turnaround within 5 days",
+    "total cost at or below 5000 CNY"
+  ],
+  "constraints": {
+    "budget_cny": 5000,
+    "time_window_h": 120
+  },
+  "budget": 5000,
+  "time_window_h": 120,
+  "currency": "CNY",
+  "weights": {
+    "objective": 0.25,
+    "risk": 0.2,
+    "cost": 0.2,
+    "feasibility": 0.2,
+    "evidence": 0.15
+  },
+  "candidates": [
+    {
+      "id": "A",
+      "name": "方案A-高分辨质谱直测",
+      "objective_fit": 0.9,
+      "risk_level": "low",
+      "estimated_cost": 6800,
+      "time_total_h": 72,
+      "parameters": {
+        "incubation_temp_c": 25,
+        "read_cycles": 12
+      },
+      "resources": [
+        {"name": "lc_ms", "availability": "available", "lead_time_days": 0},
+        {"name": "column", "availability": "available", "lead_time_days": 0}
+      ],
+      "evidence": [
+        {"claim": "仪器手册给出的检出限", "source": "equipment manual"},
+        {"claim": "预实验回收率记录", "source": "pre-experiment log"}
+      ]
+    },
+    {
+      "id": "B",
+      "name": "方案B-酶标比色法",
+      "objective_fit": 0.76,
+      "risk_level": "medium",
+      "estimated_cost": 4600,
+      "time_total_h": 96,
+      "parameters": {
+        "incubation_temp_c": 37,
+        "read_cycles": 20
+      },
+      "resources": [
+        {"name": "plate_reader", "availability": "available", "lead_time_days": 0},
+        {"name": "assay_kit", "availability": "available", "lead_time_days": 0}
+      ],
+      "evidence": [
+        {"claim": "试剂盒说明书标准曲线", "source": "equipment manual"},
+        {"claim": "同类样本预实验记录", "source": "pre-experiment log"}
+      ]
+    },
+    {
+      "id": "C",
+      "name": "方案C-超速离心富集后检测",
+      "objective_fit": 0.72,
+      "risk_level": "high",
+      "estimated_cost": 4300,
+      "time_total_h": 110,
+      "parameters": {
+        "incubation_temp_c": 4,
+        "read_cycles": 8
+      },
+      "resources": [
+        {"name": "ultracentrifuge", "availability": "unavailable", "lead_time_days": 0},
+        {"name": "plate_reader", "availability": "available", "lead_time_days": 0}
+      ]
+    }
+  ],
+  "output_contract": {
+    "candidates": "array",
+    "comparison_table": "array",
+    "recommendation": "object",
+    "costs": "array",
+    "feasibility": "array",
+    "risks": "array",
+    "evidence": "array",
+    "uncertainty": "array",
+    "summary": "object"
+  }
+}
