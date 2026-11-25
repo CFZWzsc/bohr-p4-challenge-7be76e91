@@ -1,0 +1,92 @@
+{
+  "bench": "plan-comparison-fair-comparison",
+  "cases": [
+    {
+      "baseline_missing_detected": 0,
+      "baseline_winner": "A",
+      "baseline_winner_correct": false,
+      "case_id": "bench-budget-001",
+      "case_sha256": "3babd46a26e64c067137bfd6b9aa448b5872ab14dba7ff46fa65f07a2c61bfed",
+      "gold_missing": [
+        "C:evidence_count"
+      ],
+      "gold_missing_expected": 1,
+      "gold_winner": "B",
+      "skill_missing": [
+        "C:evidence_count"
+      ],
+      "skill_missing_detected": 1,
+      "skill_missing_matches_gold": true,
+      "skill_status": "completed",
+      "skill_winner": "B",
+      "skill_winner_correct": true
+    },
+    {
+      "baseline_missing_detected": 0,
+      "baseline_winner": "A",
+      "baseline_winner_correct": false,
+      "case_id": "bench-lead-time-001",
+      "case_sha256": "4b1e93f6d74d0064eace0d6b3a81318b4ddd52c63a67681bd2005cf3a12b1da8",
+      "gold_missing": [
+        "A:risk_score",
+        "C:evidence_count"
+      ],
+      "gold_missing_expected": 2,
+      "gold_winner": "B",
+      "skill_missing": [
+        "A:risk_score",
+        "C:evidence_count"
+      ],
+      "skill_missing_detected": 2,
+      "skill_missing_matches_gold": true,
+      "skill_status": "completed",
+      "skill_winner": "B",
+      "skill_winner_correct": true
+    },
+    {
+      "baseline_missing_detected": 0,
+      "baseline_winner": "A",
+      "baseline_winner_correct": false,
+      "case_id": "bench-resource-001",
+      "case_sha256": "ba9932f1189ba8d5d6234c676810a4ff67c784eecb53d35f3825966eddd3d057",
+      "gold_missing": [
+        "A:evidence_count",
+        "B:evidence_count"
+      ],
+      "gold_missing_expected": 2,
+      "gold_winner": "C",
+      "skill_missing": [
+        "A:evidence_count",
+        "B:evidence_count"
+      ],
+      "skill_missing_detected": 2,
+      "skill_missing_matches_gold": true,
+      "skill_status": "completed",
+      "skill_winner": "C",
+      "skill_winner_correct": true
+    }
+  ],
+  "checks": {
+    "all_skill_runs_completed": true,
+    "baseline_missing_detected_zero": true,
+    "skill_missing_detected_gt_zero": true,
+    "skill_missing_matches_gold_in_all_cases": true,
+    "skill_winner_correct_gt_baseline": true
+  },
+  "protocol": {
+    "baseline_missing": "the baseline always reports an empty missing list",
+    "baseline_rule": "argmax candidate objective_fit; budgets, lead times, resource availability and missing data ignored",
+    "gold": "winner and missing cells are fixed in bench/gold before the run",
+    "input": "each case file is copied alone into an isolated directory and both sides read the same bytes",
+    "skill_command": "python scripts/run_skill.py --case <staged case.json> --out <tmp>/output/result.json --work <tmp>/work"
+  },
+  "totals": {
+    "all_skill_runs_completed": true,
+    "baseline_missing_detected": 0,
+    "baseline_winner_correct": 0,
+    "cases": 3,
+    "skill_missing_detected": 5,
+    "skill_missing_exact_cases": 3,
+    "skill_winner_correct": 3
+  }
+}
