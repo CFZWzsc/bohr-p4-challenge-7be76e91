@@ -1,0 +1,76 @@
+{
+  "policy_version": "plan-comparison-thresholds/1.0",
+  "description": "候选方案比较的可复用权重与阈值模板；键名与 SKILL.md 的比较口径一致，可直接作为 case.json 或审阅时的显式约定。",
+  "weights": {
+    "objective": 0.25,
+    "risk": 0.2,
+    "cost": 0.2,
+    "feasibility": 0.2,
+    "evidence": 0.15
+  },
+  "cost_subweights": {
+    "amount": 0.65,
+    "time": 0.35
+  },
+  "feasibility_levels": {
+    "ready": 1.0,
+    "conditional_outsource": 0.6,
+    "conditional_purchase": 0.4,
+    "not_feasible": 0.0,
+    "unknown": null
+  },
+  "risk_levels": {
+    "low": 0.2,
+    "medium": 0.5,
+    "high": 0.8,
+    "critical": 1.0
+  },
+  "evidence_type_weights": {
+    "literature": 1.0,
+    "equipment_manual": 0.9,
+    "sop": 0.8,
+    "pre_experiment": 0.8,
+    "quote": 0.7,
+    "log": 0.6,
+    "unknown": 0.5
+  },
+  "constraints": {
+    "budget_is_hard": true,
+    "time_window_is_hard": true,
+    "lead_time_is_hard": true,
+    "parameter_domain_is_hard": true,
+    "require_min_evidence_items": 0
+  },
+  "tolerances": {
+    "cost_absolute": 1.0,
+    "cost_relative": 0.01,
+    "time_absolute_h": 0.25,
+    "time_relative": 0.01,
+    "tie_epsilon": 0.0001
+  },
+  "decision": {
+    "minimum_margin": 0.05,
+    "minimum_weight_coverage": 0.9,
+    "confidence_cap_when_missing_changes_choice": "medium"
+  },
+  "units": {
+    "time": {
+      "min": 0.0166666667,
+      "minute": 0.0166666667,
+      "h": 1.0,
+      "hour": 1.0,
+      "d": 24.0,
+      "day": 24.0,
+      "wk": 168.0,
+      "week": 168.0
+    },
+    "money_scale": {
+      "CNY": 1.0,
+      "RMB": 1.0,
+      "USD": 1.0,
+      "EUR": 1.0,
+      "GBP": 1.0,
+      "CNY_10K": 10000.0
+    }
+  }
+}
