@@ -1,0 +1,92 @@
+{
+  "case_id": "bench-lead-time-001",
+  "title": "合成基准案例：采购货期与时间窗硬约束下的三方案选择",
+  "note": "本案例为合成数据，仅用于公平对照验证，不代表任何真实实验室、报价或审批。",
+  "objective": "在 4 天窗口内完成 60 个样本的蛋白免疫检测，任何采购提前期都不得超过该窗口，并保留可追溯证据。",
+  "objectives": [
+    "measure target protein in 60 samples",
+    "turnaround within 4 days",
+    "procurement lead time within the same window"
+  ],
+  "constraints": {
+    "budget_cny": 6000,
+    "time_window_h": 96
+  },
+  "budget": 6000,
+  "time_window_h": 96,
+  "currency": "CNY",
+  "weights": {
+    "objective": 0.25,
+    "risk": 0.2,
+    "cost": 0.2,
+    "feasibility": 0.2,
+    "evidence": 0.15
+  },
+  "candidates": [
+    {
+      "id": "A",
+      "name": "方案A-高灵敏化学发光",
+      "objective_fit": 0.88,
+      "estimated_cost": 5200,
+      "time_total_h": 60,
+      "parameters": {
+        "incubation_temp_c": 25,
+        "read_cycles": 12
+      },
+      "resources": [
+        {"name": "plate_reader", "availability": "available", "lead_time_days": 0},
+        {"name": "antibody_lot", "availability": "needs purchase", "lead_time_days": 6}
+      ],
+      "evidence": [
+        {"claim": "抗体批次说明书", "source": "equipment manual"}
+      ]
+    },
+    {
+      "id": "B",
+      "name": "方案B-ELISA 双抗夹心",
+      "objective_fit": 0.79,
+      "risk_level": "medium",
+      "estimated_cost": 5400,
+      "time_total_h": 84,
+      "parameters": {
+        "incubation_temp_c": 37,
+        "read_cycles": 20
+      },
+      "resources": [
+        {"name": "plate_reader", "availability": "available", "lead_time_days": 0},
+        {"name": "elisa_kit", "availability": "available", "lead_time_days": 0}
+      ],
+      "evidence": [
+        {"claim": "ELISA 试剂盒说明书", "source": "equipment manual"},
+        {"claim": "同类样本预实验记录", "source": "pre-experiment log"}
+      ]
+    },
+    {
+      "id": "C",
+      "name": "方案C-快速免疫层析",
+      "objective_fit": 0.81,
+      "risk_level": "medium",
+      "estimated_cost": 5000,
+      "time_total_h": 130,
+      "parameters": {
+        "incubation_temp_c": 25,
+        "read_cycles": 6
+      },
+      "resources": [
+        {"name": "strip_reader", "availability": "available", "lead_time_days": 0},
+        {"name": "strip_cassette", "availability": "available", "lead_time_days": 0}
+      ]
+    }
+  ],
+  "output_contract": {
+    "candidates": "array",
+    "comparison_table": "array",
+    "recommendation": "object",
+    "costs": "array",
+    "feasibility": "array",
+    "risks": "array",
+    "evidence": "array",
+    "uncertainty": "array",
+    "summary": "object"
+  }
+}
