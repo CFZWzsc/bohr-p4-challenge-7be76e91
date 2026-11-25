@@ -1,0 +1,9 @@
+{
+  "case_id": "bench-lead-time-001",
+  "winner": "B",
+  "missing_or_unsupported": [
+    "A:risk_score",
+    "C:evidence_count"
+  ],
+  "rationale": "A 的 objective_fit 最高（0.88），但抗体批次需要采购，lead_time_days=6 超过 4 天（96 h）时间窗，按货期硬约束不可推荐。C 的时间 130 h 超过 96 h 时间窗，按时间硬约束不可推荐。B 成本 5400 CNY、时间 84 h，资源全部可用且无采购货期，是唯一 eligible 候选，因此 winner 唯一确定为 B。A 未声明风险等级，risk_score 记为缺失；C 未提供证据条目，evidence_count 记为缺失。按 objective_fit 取最大值会选中 A，忽略货期硬约束。"
+}
