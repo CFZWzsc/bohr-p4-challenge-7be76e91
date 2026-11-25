@@ -1,0 +1,8 @@
+{
+  "case_id": "bench-budget-001",
+  "winner": "B",
+  "missing_or_unsupported": [
+    "C:evidence_count"
+  ],
+  "rationale": "A 是 objective_fit 最高（0.90）的候选，但声明成本 6800 CNY 超过预算 5000 CNY，按预算硬约束不可推荐。C 的关键资源 ultracentrifuge 为 unavailable，可行性判为 not_feasible，同样不可推荐。B 成本 4600 CNY、时间 96 h 均在硬约束内，资源全部可用，是唯一 eligible 候选，因此 winner 唯一确定为 B。C 未提供任何证据条目，evidence_count 记为缺失。盲目按 objective_fit 取最大值会选中 A，得到与硬约束冲突的结论。"
+}
