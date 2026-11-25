@@ -1,0 +1,90 @@
+{
+  "case_id": "bench-resource-001",
+  "title": "合成基准案例：关键资源缺失与预算共同决定的三方案选择",
+  "note": "本案例为合成数据，仅用于公平对照验证，不代表任何真实实验室、报价或审批。",
+  "objective": "在 5 天窗口内完成 40 个活细胞样本的成像定量，总成本不超过 5500 CNY，并保留可追溯证据。",
+  "objectives": [
+    "quantify target signal in 40 live-cell samples",
+    "turnaround within 5 days",
+    "total cost at or below 5500 CNY"
+  ],
+  "constraints": {
+    "budget_cny": 5500,
+    "time_window_h": 120
+  },
+  "budget": 5500,
+  "time_window_h": 120,
+  "currency": "CNY",
+  "weights": {
+    "objective": 0.25,
+    "risk": 0.2,
+    "cost": 0.2,
+    "feasibility": 0.2,
+    "evidence": 0.15
+  },
+  "candidates": [
+    {
+      "id": "A",
+      "name": "方案A-活细胞共聚焦成像",
+      "objective_fit": 0.92,
+      "risk_level": "low",
+      "estimated_cost": 4800,
+      "time_total_h": 70,
+      "parameters": {
+        "incubation_temp_c": 37,
+        "laser_power_pct": 40
+      },
+      "resources": [
+        {"name": "bsl3_hood", "availability": "unavailable", "lead_time_days": 0},
+        {"name": "confocal", "availability": "available", "lead_time_days": 0}
+      ]
+    },
+    {
+      "id": "B",
+      "name": "方案B-高内涵筛选成像",
+      "objective_fit": 0.83,
+      "risk_level": "medium",
+      "estimated_cost": 6000,
+      "time_total_h": 88,
+      "parameters": {
+        "incubation_temp_c": 37,
+        "laser_power_pct": 30
+      },
+      "resources": [
+        {"name": "hcs_reader", "availability": "available", "lead_time_days": 0},
+        {"name": "imaging_plate", "availability": "available", "lead_time_days": 0}
+      ]
+    },
+    {
+      "id": "C",
+      "name": "方案C-板式发光成像",
+      "objective_fit": 0.78,
+      "risk_level": "medium",
+      "estimated_cost": 5300,
+      "time_total_h": 92,
+      "parameters": {
+        "incubation_temp_c": 30,
+        "laser_power_pct": 25
+      },
+      "resources": [
+        {"name": "plate_reader", "availability": "available", "lead_time_days": 0},
+        {"name": "luminometer", "availability": "available", "lead_time_days": 0}
+      ],
+      "evidence": [
+        {"claim": "仪器手册给出的线性范围", "source": "equipment manual"},
+        {"claim": "预实验标准曲线", "source": "pre-experiment log"}
+      ]
+    }
+  ],
+  "output_contract": {
+    "candidates": "array",
+    "comparison_table": "array",
+    "recommendation": "object",
+    "costs": "array",
+    "feasibility": "array",
+    "risks": "array",
+    "evidence": "array",
+    "uncertainty": "array",
+    "summary": "object"
+  }
+}
