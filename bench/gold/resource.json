@@ -1,0 +1,9 @@
+{
+  "case_id": "bench-resource-001",
+  "winner": "C",
+  "missing_or_unsupported": [
+    "A:evidence_count",
+    "B:evidence_count"
+  ],
+  "rationale": "A 的 objective_fit 最高（0.92），但关键资源 bsl3_hood 为 unavailable，可行性判为 not_feasible，不可推荐。B 成本 6000 CNY 超过预算 5500 CNY，按预算硬约束不可推荐。C 成本 5300 CNY、时间 92 h，资源全部可用，是唯一 eligible 候选，因此 winner 唯一确定为 C。A 与 B 均未提供证据条目，evidence_count 记为缺失。本案例的硬约束由资源可用性与预算分别否掉两个候选，按 objective_fit 取最大值会选中 A。"
+}
