@@ -1814,6 +1814,8 @@ def build_recommendation(rows, weights, policy):
                     "Relax at least one hard constraint (availability, budget, time window, "
                     "lead time or parameter domain) or add a new candidate."],
                 "confidence": "none",
+                "stop_rule": ("Stop once one candidate clears every hard constraint; continue "
+                              "only if a named constraint is relaxed or a new candidate is added."),
                 "caveats": [row["id"] + ": " + ", ".join(row["feasibility"]["reasons"])
                             for row in rows]}
     eligible.sort(key=lambda row: (-row["score"]["weighted_score"],
@@ -1886,13 +1888,22 @@ def build_recommendation(rows, weights, policy):
     if not runner or (selected["score"]["conservative_score"] + 1e-9
                       < (runner["score"]["conservative_score"] if runner else 0)):
         confidence = "low"
+    margin = (round(selected["score"]["weighted_score"]
+                    - runner["score"]["weighted_score"], 6) if runner else None)
+    decisive = factors[0]["label"] if factors else "the decisive dimension"
+    stop_rule = ("Stop when the top-2 weighted margin is at least 0.05 and weight coverage "
+                 "is at least 90%%; otherwise run one confirmatory measurement on %s before "
+                 "deciding. Measured here: margin=%s, coverage=%.0f%%, conservative order %s."
+                 % (decisive, margin if margin is not None else "n/a", coverage * 100,
+                    "agrees" if (runner and selected["score"]["conservative_score"] + 1e-9
+                                 >= runner["score"]["conservative_score"]) else "differs"))
     return {"selected": selected["id"], "name": selected["name"],
             "rationale": ("%s 以加权分 %.4f 排名第一（权重覆盖 %.0f%%），次选为 %s。"
                           % (selected["id"], selected["score"]["weighted_score"],
                              coverage * 100, runner["id"] if runner else "无")),
             "decisive_factors": factors[:4], "runner_up": runner["id"] if runner else None,
-            "margin": round(selected["score"]["weighted_score"]
-                            - runner["score"]["weighted_score"], 6) if runner else None,
+            "margin": margin,
+            "stop_rule": stop_rule,
             "rejected": rejected, "would_change_choice": [], "confidence": confidence,
             "caveats": caveats}
 
@@ -2777,9 +2788,9 @@ def run_pipeline(opts):
     data_completeness = "complete" if not missing_data else "partial"
     payload["summary"] = {
         "candidates": len(rows), "dimensions": 5,
-        "cells": len(rows) * 10,
-        "cells_with_locator": sum(1 for row in rows for cell in row["cells"].values()
-                                  if cell.get("locator")),
+        "cell_count": sum(len(row["cells"]) for row in rows),
+        "locator_count": sum(1 for row in rows for cell in row["cells"].values()
+                             if cell.get("locator")),
         "missing_cells": len(missing_data),
         "conflicts": len(conflicts),
         "eligible_candidates": sum(1 for row in rows if row["feasibility"].get("eligible")),
