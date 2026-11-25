@@ -24,6 +24,7 @@ answers, private data or credentials are included.
 | `references/comparison-fields.md` |
 | `references/costing-and-feasibility.md` |
 | `references/recommendation-and-sensitivity.md` |
+| `scripts/publish_artifacts.py` |
 | `scripts/run_skill.py` |
 | `scripts/sk_entry.py` |
 | `README.md` |
