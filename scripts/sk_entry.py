@@ -2836,6 +2836,13 @@ def run_pipeline(opts):
     result["run_review_path"] = "run-review.md"
     result["run_log"] = run_log + [{"step": "done", "detail": "status=%s selected=%s"
                                     % (status, recommendation.get("selected"))}]
+    cell_status = {}
+    for row in result.get("comparison_table") or []:
+        for cell in (row.get("cells") or {}).values():
+            status = (cell or {}).get("status") or "unknown"
+            cell_status[status] = cell_status.get(status, 0) + 1
+    result["summary"]["cell_status_counts"] = cell_status
+    result["summary"]["cell_total"] = sum(cell_status.values())
     result["summary"]["contract_keys_total"] = status_info["total"]
     result["summary"]["contract_keys_mapped"] = status_info["mapped"]
     log("done", "contract %d/%d" % (status_info["mapped"], status_info["total"]))
