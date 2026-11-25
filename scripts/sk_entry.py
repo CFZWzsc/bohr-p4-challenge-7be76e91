@@ -2507,9 +2507,7 @@ def run_pipeline(opts):
     def log(step, detail):
         run_log.append({"step": step, "detail": detail})
 
-    log("start", "input=%s out=%s work=%s" % (os.path.basename(os.path.normpath(opts["input"])),
-                                               os.path.basename(opts["out"]),
-                                               os.path.basename(os.path.normpath(opts["work"]))))
+    log("start", "input=%s out=<out> work=<work>" % os.path.basename(os.path.normpath(opts["input"])))
     log("policy", "loaded %s" % policy_source)
 
     case_path = opts["case"] if opts.get("case") else None
@@ -2876,6 +2874,13 @@ def write_outputs(result, review, opts):
             handle.write(review)
     except OSError as exc:
         errors.append("cannot_write_review:%s" % exc)
+    try:
+        from publish_artifacts import emit_artifacts
+        emit_artifacts(result, out_path, "experiment plan comparison",
+                       "python scripts/sk_entry.py --input /input --work /app/work --out /app/output",
+                       [opts.get("case") or ""])
+    except Exception as exc:  # auxiliary artifacts must never fail the run
+        errors.append("artifact_emit_skipped:%s" % exc)
     work_dir = opts.get("work") or "/app/work"
     try:
         os.makedirs(work_dir, exist_ok=True)
